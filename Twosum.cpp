@@ -1,29 +1,28 @@
-#include <bits/stdc++.h>
+#include<iostream>
+#include<vector>
+#include<unordered_map>
 using namespace std;
 
-vector<int> twoSum(vector<int>& nums, int target) {
-    unordered_map<int, int> mp;
-
-    for(int i = 0; i < nums.size(); i++) {
-        int complement = target - nums[i];
-
-        if(mp.find(complement) != mp.end()) {
-            return {mp[complement], i};
+vector<int>twosum(vector<int>& arr,int target){
+    unordered_map<int,int>m;
+    vector<int>ans;
+    for(int i=0;i<arr.size();i++){
+        int first = arr[i];
+        int sec = target - arr[i];
+        if(m.find(sec) != m.end()){
+            ans.push_back(i);
+            ans.push_back(m[sec]);
         }
-
-        mp[nums[i]] = i;
+        m[arr[i]] = i;
     }
-
-    return {};
+    return ans;
 }
-
-int main() {
-    vector<int> nums = {2, 7, 11, 15};
-    int target = 9;
-
-    vector<int> ans = twoSum(nums, target);
-
-    cout << ans[0] << " " << ans[1] << endl;
-
+int main(){
+    vector<int>arr = {1,2,3,4,5};
+    int target = 3;
+    vector<int>ans = twosum(arr,target);
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<endl;
+    }
     return 0;
 }
