@@ -1,44 +1,48 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-class Solution {
-public:
-    vector<vector<int>> threeSum(vector<int>& nums) {
-        vector<vector<int>> result;
-        int n = nums.size();
-
-        sort(nums.begin(), nums.end());
-
-        for (int i = 0; i < n; i++) {
-
-            // duplicate skip
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
-
-            int left = i + 1;
-            int right = n - 1;
-
-            while (left < right) {
-                int sum = nums[i] + nums[left] + nums[right];
-
-                if (sum == 0) {
-                    result.push_back({nums[i], nums[left], nums[right]});
-
-                    left++;
-                    right--;
-
-                    // duplicate skip
-                    while (left < right && nums[left] == nums[left - 1]) left++;
-                    while (left < right && nums[right] == nums[right + 1]) right--;
-                }
-                else if (sum < 0) {
-                    left++;
-                }
-                else {
-                    right--;
+vector<vector<int>>threesum(vector<int>& arr){
+    vector<vector<int>>result;
+    vector<int>ans;
+    sort(arr.begin(),arr.end());
+    for(int i=0;i<arr.size();i++){
+        if(i > 0 && arr[i] == arr[i-1]){
+            continue;
+        }
+        int j = i+1;
+        int k = arr.size()-1;
+        while(j < k){
+            int sum = arr[i] + arr[j] + arr[k];
+            if(sum < 0){
+                j++;
+            }
+            else if(sum > 0){
+                k--;
+            }
+            else{
+                ans.push_back(arr[i]);
+                ans.push_back(arr[j]);
+                ans.push_back(arr[k]);
+                result.push_back(ans);
+                j++;
+                k--;
+                while(j < k && arr[j] == arr[j-1]){
+                    j++;
                 }
             }
         }
-
-        return result;
     }
-};
+    return result;
+}
+int main(){
+    vector<int>arr = {-1,0,1,2,-1,-4};
+    vector<vector<int>>result = threesum(arr);
+    for(auto &v : result){
+        for(int x : v){
+            cout<<x<<" ";
+        }
+        cout<<endl;
+    }
+}
